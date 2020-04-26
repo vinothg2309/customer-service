@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-gateway
+spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
+  rules:
+    - host: minikube
+      http:
+        paths:
+          - path: /customer
+            backend:
+              serviceName: customer-service
+              servicePort: 123
+          - path: /loan
+            backend:
+              serviceName: loan-service
+              servicePort: 801

@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-service
+  labels:
+    name: customer-service
+    app: customer-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      appname: customer-service
+  template:
+    metadata:
+      name: customer-service
+      labels:
+        appname: customer-service
+    spec:
+      containers:
+        - name: customer-service
+          image: vinothg2309/customer-service
+          env:
+            - name: MONGODB_STATEFUL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: micro-config-map
+                  key: MONGODB_STATEFUL_HOST
+            - name: LOAN_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: micro-config-map
+                  key: LOAN_SERVICE_URL
+            - name: VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: micro-config-map
+                  key: VERSION
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: username
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: password
+          ports:
+            - containerPort: 8103
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service
+  labels:
+    appname: customer-service
+spec:
+  selector:
+    appname: customer-service
+  type: LoadBalancer
+  ports:
+    - name: customer-service-port
+      protocol: TCP
+      port: 123
+      targetPort: 8103

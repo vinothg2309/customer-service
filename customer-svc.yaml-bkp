@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service
+  labels:
+    appname: customer-service
+spec:
+  selector:
+    appname: customer-service
+  type: LoadBalancer
+  ports:
+    - name: customer-service-port
+      protocol: TCP
+      port: 80
+      targetPort: 8103
