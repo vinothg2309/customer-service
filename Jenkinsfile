@@ -2,7 +2,7 @@ node{
     def app
 
     stage('Git Clone'){
-            git clone 'https://github.com/vinothg2309/customer-service.git'
+            git 'https://github.com/vinothg2309/customer-service.git'
      }
 
     stage('maven build'){
