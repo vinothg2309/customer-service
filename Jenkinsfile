@@ -3,7 +3,6 @@ node{
 
     stage('Git Clone'){
         steps{
-            echo "Git Checkout"
             git clone 'https://github.com/vinothg2309/customer-service.git'
         }
     }
