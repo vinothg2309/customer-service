@@ -10,8 +10,10 @@ node{
 
     stage('maven build'){
         steps{
-            echo "MAVEN BUILD"
-            mvn package
+            sh '''
+                echo "MAVEN BUILD"
+                mvn package
+            '''
         }
     }
 
