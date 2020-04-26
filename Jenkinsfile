@@ -1,6 +1,7 @@
-node{
+pipeline{
     def app
-
+    stages
+    {
     stage('Git Clone'){
         steps{
             echo "Git Checkout"
@@ -40,5 +41,5 @@ node{
             echo "DOCKER IMAGE PUSHED!!!"
         }
     }
-
+}
 }
